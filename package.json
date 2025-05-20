@@ -1,0 +1,77 @@
+{
+  "name": "excel-to-js",
+  "displayName": "excel-to-js",
+  "description": "Convert an excel table to JS object or array by copy pasting",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.100.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:excelToObject.pasteAsObject"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "Excel to Object",
+      "properties": {
+        "excelToObject.alwaysShowFormatPicker": {
+          "type": "boolean",
+          "default": true,
+          "description": "Always show format picker when pasting Excel data. If false, the last used format is used."
+        },
+        "excelToObject.defaultFormat": {
+          "type": "string",
+          "enum": [
+            "Object (Row Keys)",
+            "Object (Column Keys)",
+            "Array of Arrays"
+          ],
+          "default": "Object (Row Keys)",
+          "description": "Default format used when 'alwaysShowFormatPicker' is false."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "excelToObject.pasteAsObject",
+        "title": "Paste Excel as Object"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "excelToObject.pasteAsObject",
+        "key": "ctrl+alt+v",
+        "when": "editorTextFocus"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack --mode development",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.100.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@typescript-eslint/eslint-plugin": "^8.31.1",
+    "@typescript-eslint/parser": "^8.31.1",
+    "eslint": "^9.25.1",
+    "typescript": "^5.8.3",
+    "ts-loader": "^9.5.2",
+    "webpack": "^5.99.7",
+    "webpack-cli": "^6.0.1",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.5.2"
+  }
+}
